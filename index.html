@@ -55,6 +55,8 @@ a:hover{text-decoration:underline}
   padding:7px 10px; border-radius:9px; line-height:1;
 }
 .brand .sub{font-size:12px; color:var(--muted); letter-spacing:.4px; text-transform:uppercase}
+.brand-title{color:var(--text); font-weight:600; font-family:var(--f-disp)}
+#terme-col{width:190px}
 .toc-title{font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--faint); margin:26px 0 10px}
 .toc{list-style:none; margin:0; padding:0}
 .toc li{margin:1px 0}
@@ -220,7 +222,7 @@ td code,th code{white-space:nowrap}
   <aside class="sidebar" id="sidebar">
     <div class="brand">
       <span class="logo">&lt;/&gt;</span>
-      <div><div style="color:var(--text);font-weight:600;font-family:var(--f-disp)">HTML</div>
+      <div><div class="brand-title">HTML</div>
       <div class="sub">cours débutant</div></div>
     </div>
     <div class="toc-title">Sommaire</div>
@@ -233,6 +235,7 @@ td code,th code{white-space:nowrap}
       <li><a href="#balises"><span class="num">06</span>Les balises essentielles</a></li>
       <li><a href="#projet"><span class="num">07</span>Mini-projet</a></li>
       <li><a href="#glossaire"><span class="num">08</span>Glossaire</a></li>
+      <li><a href="#css"><span class="num">09</span>CSS inline et CSS interne</a></li>
     </ul>
   </aside>
 
@@ -248,7 +251,7 @@ td code,th code{white-space:nowrap}
       <div class="chips">
         <span class="chip"><b>Niveau</b> débutant</span>
         <span class="chip"><b>Fil rouge</b> Teranga Électronique · Dakar</span>
-        <span class="chip"><b>8</b> sections</span>
+        <span class="chip"><b>9</b> sections</span>
       </div>
     </header>
 
@@ -671,7 +674,7 @@ td code,th code{white-space:nowrap}
       <h2>Glossaire</h2>
       <div class="tbl-wrap">
         <table>
-          <thead><tr><th style="width:190px">Terme</th><th>Définition</th></tr></thead>
+          <thead><tr><th id="terme-col">Terme</th><th>Définition</th></tr></thead>
           <tbody>
             <tr><td><b>HTML</b></td><td>HyperText Markup Language. Langage de balisage qui structure le contenu d'une page web.</td></tr>
             <tr><td><b>Balise (tag)</b></td><td>Mot-clé entre chevrons <code>&lt; &gt;</code> qui marque un élément. Le plus souvent par paire (ouvrante et fermante).</td></tr>
@@ -686,6 +689,78 @@ td code,th code{white-space:nowrap}
         </table>
       </div>
 
+    </section>
+
+    <!-- 9. CSS INLINE ET INTERNE -->
+    <section class="block" id="css">
+      <div class="sec-no">09</div>
+      <h2>CSS inline et CSS interne</h2>
+      <p>Le CSS (vu en section 1) peut s'écrire à plusieurs endroits différents, et on peut viser un élément précis avec deux attributs : <code>class</code> ou <code>id</code>. Regardons le <b>CSS inline</b> et le <b>CSS interne</b> à partir de deux exemples bien réels, tirés de cette page : le petit bloc « HTML » du logo (avec <code>class</code>), et l'en-tête « Terme » du glossaire (avec <code>id</code>).</p>
+
+      <h3>Le CSS inline</h3>
+      <p>Le <b>CSS inline</b> consiste à écrire le style <b>directement dans la balise</b>, à l'intérieur d'un attribut <code>style="..."</code>. C'est la façon la plus directe d'appliquer un style à un élément précis.</p>
+      <figure class="codewin" data-file="avant-inline.html"><script type="text/plain" class="src">
+<div style="color:var(--text);font-weight:600;font-family:var(--f-disp)">HTML</div>
+</script></figure>
+      <div class="rows">
+        <div class="row gain"><b>Ce que l'on gagne</b>Rapide à écrire pour styler un seul élément, sans toucher à autre chose.</div>
+        <div class="row limit"><b>La limite</b>Le style est mélangé au contenu — exactement le problème déjà rencontré avec la balise <code>&lt;font&gt;</code> en HTML 3.2 (section 4). Si dix éléments doivent partager ce style, il faut le réécrire dix fois.</div>
+      </div>
+
+      <h3>Passer au CSS interne : la méthode</h3>
+      <p>Le <b>CSS interne</b> regroupe tous les styles dans une seule balise <code>&lt;style&gt;</code>, placée dans le <code>&lt;head&gt;</code> (c'est exactement la grosse balise <code>&lt;style&gt;</code> qui se trouve en haut du code de cette page). Pour transformer un style inline en CSS interne, on suit toujours les mêmes étapes :</p>
+      <ol class="clean">
+        <li>On repère le texte écrit dans l'attribut <code>style="..."</code> de la balise.</li>
+        <li>On <b>coupe</b> ce texte (on le retire de l'attribut).</li>
+        <li>On remplace l'attribut <code>style="..."</code> par un attribut <code>class="nom-de-classe"</code> — un nom qui décrit le rôle de l'élément.</li>
+        <li>Dans la balise <code>&lt;style&gt;</code>, on écrit <code>.nom-de-classe</code> suivi d'une paire d'accolades <code>{ }</code>.</li>
+        <li>On <b>colle</b>, à l'intérieur de ces accolades, le style coupé à l'étape 2.</li>
+      </ol>
+
+      <p>Appliquons la méthode à notre exemple. On coupe le style, on le remplace par <code>class="brand-title"</code> :</p>
+      <figure class="codewin" data-file="apres-interne.html"><script type="text/plain" class="src">
+<div class="brand-title">HTML</div>
+</script></figure>
+      <p>...puis on colle le style coupé dans une nouvelle règle <code>.brand-title</code>, à l'intérieur de la balise <code>&lt;style&gt;</code> du <code>&lt;head&gt;</code> :</p>
+      <figure class="codewin" data-file="style-interne.css"><script type="text/plain" class="src">
+.brand-title{
+  color:var(--text);
+  font-weight:600;
+  font-family:var(--f-disp);
+}
+</script></figure>
+
+      <div class="note"><b>À retenir</b> Le rendu visuel est exactement le même qu'avant : on a seulement déplacé le style hors de la balise vers la feuille de style, en passant par une classe. C'est précisément ce que fait cette page — vous pouvez vérifier en affichant son code source (la classe <code>brand-title</code> est utilisée juste au-dessus, dans le logo du sommaire).</div>
+
+      <h3>Le second attribut possible : id</h3>
+      <p>Pour cibler un élément, on peut utiliser <code>class</code>… ou <code>id</code>. La règle à retenir : un <code>id</code> doit être <b>unique</b> — une seule fois dans toute la page — alors qu'une <code>class</code> peut être posée sur autant d'éléments qu'on veut. Dans la balise <code>&lt;style&gt;</code>, on écrit le sélecteur avec un <b>point</b> pour une classe (<code>.nom-de-classe</code>) et avec un <b>croisillon</b> (#) pour un id (<code>#nom-d-id</code>) — la méthode de conversion reste identique, seul ce symbole change.</p>
+      <p>Reprenons la méthode avec un autre exemple réel de cette page : l'en-tête « Terme » du tableau du glossaire (section 08), qui avait une largeur fixée en CSS inline.</p>
+      <figure class="codewin" data-file="avant-inline-id.html"><script type="text/plain" class="src">
+<th style="width:190px">Terme</th>
+</script></figure>
+      <p>On coupe <code>width:190px</code>, on remplace l'attribut <code>style="..."</code> par <code>id="terme-col"</code> (un id, puisque cet en-tête est unique sur la page) :</p>
+      <figure class="codewin" data-file="apres-interne-id.html"><script type="text/plain" class="src">
+<th id="terme-col">Terme</th>
+</script></figure>
+      <p>...puis on colle le style coupé dans une règle <code>#terme-col</code>, avec un # au lieu d'un point :</p>
+      <figure class="codewin" data-file="style-interne-id.css"><script type="text/plain" class="src">
+#terme-col{
+  width:190px;
+}
+</script></figure>
+      <div class="note"><b>À noter</b> Sur cette page, <code>id</code> a déjà un autre rôle : il sert aussi de point d'ancrage pour les liens du sommaire (ex. <code>#intro</code>, <code>#histoire</code>) et pour le script de navigation. Un même <code>id</code> peut donc à la fois être ciblé en CSS et servir de destination de lien — raison de plus pour qu'il reste unique.</div>
+
+      <h3>Comparatif rapide</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Type</th><th>Où s'écrit le style</th><th>Avantage</th><th>Limite</th></tr></thead>
+          <tbody>
+            <tr><td>CSS inline</td><td>Attribut <code>style="..."</code> sur la balise</td><td>Immédiat sur un élément isolé</td><td>Pas réutilisable, mélangé au contenu</td></tr>
+            <tr><td>CSS interne (class)</td><td>Balise <code>&lt;style&gt;</code>, sélecteur <code>.nom-de-classe</code></td><td>Réutilisable sur plusieurs éléments</td><td>Reste propre à cette seule page</td></tr>
+            <tr><td>CSS interne (id)</td><td>Balise <code>&lt;style&gt;</code>, sélecteur <code>#nom-d-id</code></td><td>Cible un élément unique avec précision</td><td>Un même id ne doit apparaître qu'une seule fois dans la page</td></tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
    </div>
